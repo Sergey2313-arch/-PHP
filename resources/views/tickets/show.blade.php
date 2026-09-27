@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('title', 'Заявка #'.$ticket->id)
+@section('content')
+<a class="small d-inline-block mb-3" href="{{ route('tickets.index') }}">← Мои заявки</a>
+<div class="page-header"><div><p class="eyebrow">Заявка #{{ $ticket->id }}</p><h1 class="ticket-title">{{ $ticket->title }}</h1></div><div class="d-flex gap-2 flex-wrap"><a class="btn btn-outline-primary" href="{{ route('tickets.edit', $ticket) }}">Редактировать</a><form method="post" action="{{ route('tickets.destroy', $ticket) }}" data-confirm="Удалить эту заявку?">@csrf @method('DELETE')<button type="submit" class="btn btn-outline-danger">Удалить</button></form></div></div>
+<div class="row g-4"><div class="col-lg-8"><div class="card"><div class="card-header"><h2 class="h5 mb-0">Описание проблемы</h2></div><div class="card-body ticket-description">{{ $ticket->description }}</div></div></div><div class="col-lg-4"><div class="card"><div class="card-body"><div class="d-flex gap-2 mb-4"><x-ticket-badges :ticket="$ticket" /></div><dl class="mb-0"><dt class="small text-secondary">Категория</dt><dd class="mb-3">{{ $ticket->category->name }}</dd><dt class="small text-secondary">Автор</dt><dd class="mb-3">{{ $ticket->user->name }}</dd><dt class="small text-secondary">Создана</dt><dd class="mb-3">{{ $ticket->created_at->format('d.m.Y H:i') }}</dd><dt class="small text-secondary">Обновлена</dt><dd class="mb-0">{{ $ticket->updated_at->format('d.m.Y H:i') }}</dd></dl></div></div></div></div>
+@endsection

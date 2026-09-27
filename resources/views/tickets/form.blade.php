@@ -1,0 +1,8 @@
+@csrf
+<div class="mb-4"><label for="title" class="form-label">Название</label><input id="title" name="title" class="form-control" value="{{ old('title', $ticket->title) }}" maxlength="255" placeholder="Кратко опишите проблему" required autofocus></div>
+<div class="row g-3 mb-4">
+    <div class="col-md-7"><label for="category_id" class="form-label">Категория</label><select id="category_id" name="category_id" class="form-select" required><option value="">Выберите категорию</option>@foreach($categories as $category)<option value="{{ $category->id }}" @selected(old('category_id', $ticket->category_id) == $category->id)>{{ $category->name }}</option>@endforeach</select></div>
+    <div class="col-md-5"><label for="priority" class="form-label">Приоритет</label><select id="priority" name="priority" class="form-select" required>@foreach(\App\Models\Ticket::PRIORITIES as $value => $label)<option value="{{ $value }}" @selected(old('priority', $ticket->priority) === $value)>{{ $label }}</option>@endforeach</select></div>
+</div>
+<div class="mb-4"><label for="description" class="form-label">Описание проблемы</label><textarea id="description" name="description" class="form-control" rows="7" maxlength="20000" required>{{ old('description', $ticket->description) }}</textarea><div class="form-hint mt-2">Что произошло, когда появилась проблема и что вы уже попробовали?</div></div>
+<div class="d-flex gap-2"><button type="submit" class="btn btn-primary">{{ $ticket->exists ? 'Сохранить изменения' : 'Отправить заявку' }}</button><a class="btn btn-outline-secondary" href="{{ $ticket->exists ? route('tickets.show', $ticket) : route('tickets.index') }}">Отмена</a></div>
