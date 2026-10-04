@@ -27,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        // Связываем модель с проверками владельца для Gate::authorize() и user()->can().
         Gate::policy(Ticket::class, TicketPolicy::class);
+        // Именованный лимит подключён к POST /login через middleware throttle:login.
         RateLimiter::for('login', function (Request $request) {
             return [
                 Limit::perMinute(5)->by(mb_strtolower((string) $request->input('email')).'|'.$request->ip()),

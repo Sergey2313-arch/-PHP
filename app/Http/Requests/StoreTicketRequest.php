@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/** Отделяет проверку данных формы от сохранения заявки в контроллере. */
 class StoreTicketRequest extends FormRequest
 {
     public function authorize(): bool
@@ -20,6 +21,7 @@ class StoreTicketRequest extends FormRequest
             'description' => ['required', 'string', 'max:20000'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'priority' => ['sometimes', 'required', Rule::in(array_keys(Ticket::PRIORITIES))],
+            // Пользователь не выбирает автора и состояние обработки даже в ручном запросе.
             'status' => ['prohibited'],
             'user_id' => ['prohibited'],
         ];

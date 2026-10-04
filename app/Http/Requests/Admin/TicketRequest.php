@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/** Правила полной административной формы: в отличие от пользовательской, разрешает status. */
 class TicketRequest extends FormRequest
 {
     public function authorize(): bool

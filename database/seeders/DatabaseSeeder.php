@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
                     'category_id' => $categories[$index % $categories->count()]->id,
                     'title' => $title,
                     'description' => 'Проблема возникла сегодня утром. Перезапуск приложения и компьютера не помог. Прошу проверить настройки и помочь восстановить работу.',
-                    'status' => array_keys(Ticket::STATUSES)[$index % 4],
+                    'status' => array_keys(Ticket::STATUSES)[$index % count(Ticket::STATUSES)],
                     'priority' => array_keys(Ticket::PRIORITIES)[$index % 4],
                 ]);
             }

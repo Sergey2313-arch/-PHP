@@ -7,10 +7,13 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+/** Справочник пользователей в админке: только просмотр, без изменения ролей и паролей. */
 class UserCrudController extends CrudController
 {
+    // Подключены только операции списка и карточки; Create/Update/Delete здесь отсутствуют.
     use ListOperation, ShowOperation;
 
+    /** Связывает CRUD с моделью User и адресом /admin/user. */
     public function setup(): void
     {
         $this->crud->setModel(User::class);
@@ -18,6 +21,7 @@ class UserCrudController extends CrudController
         $this->crud->setEntityNameStrings('пользователя', 'Пользователи');
     }
 
+    /** Явно перечисляет видимые поля: хеш пароля и remember_token не выводятся. */
     protected function setupListOperation(): void
     {
         $this->crud->addColumns([
@@ -29,6 +33,7 @@ class UserCrudController extends CrudController
         ]);
     }
 
+    /** Отключает автоматический вывод всех полей БД в карточке. */
     protected function setupShowOperation(): void
     {
         $this->crud->set('show.setFromDb', false);
